@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AKT Zakovat o‘yini</title>
+<style>
+:root{--bg:#f4f7fa;--fg:#1b2733;--card:#fff;--pri:#1f3a5f;--acc:#2a9d8f;--ok:#2a9d5f;--bad:#d64545;--mut:#6b7a89;--line:#d9e1e8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1720;--fg:#e8eef4;--card:#1a2633;--pri:#7fb0e6;--acc:#3cc2b0;--mut:#93a4b5;--line:#2c3d4f}}
+:root[data-theme="dark"]{--bg:#0f1720;--fg:#e8eef4;--card:#1a2633;--pri:#7fb0e6;--acc:#3cc2b0;--mut:#93a4b5;--line:#2c3d4f}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100%}
+#app{max-width:860px;margin:0 auto;padding:18px}
+h1{font-size:28px;margin:8px 0;color:var(--pri)}h2{margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}.mut{color:var(--mut)}
+button{font:inherit;cursor:pointer;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--fg);padding:12px 16px}
+button.pri{background:var(--pri);border-color:var(--pri);color:var(--bg);font-weight:700}
+button.sel{border-color:var(--acc);background:var(--acc);color:#fff}
+input{font:inherit;width:100%;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--fg);margin:4px 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:6px 12px;border-radius:20px;border:2px solid var(--line);font-size:14px}
+.chip.on{color:#fff;border-color:transparent}
+.q{font-size:22px;font-weight:700;margin:10px 0 16px;line-height:1.35}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{text-align:left;display:flex;gap:10px;align-items:center;font-size:17px}
+.opt b{background:var(--line);border-radius:8px;min-width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center}
+.opt.ok{background:var(--ok);border-color:var(--ok);color:#fff}.opt.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.bar{height:12px;background:var(--line);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);width:100%}
+.time{font-size:34px;font-weight:800;text-align:center}.time.low{color:var(--bad)}
+.rank{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;border:2px solid var(--line);margin:8px 0;font-size:20px}
+.rank span:nth-child(2){flex:1;font-weight:700}
+</style></head><body><div id="app"></div>
+<script>
+const Q=[
+["AKT qisqartmasi nimani anglatadi?",["Axborot-kommunikatsiya texnologiyalari","Avtomatlashtirilgan kompyuter tizimi","Axborotni kodlash tizimi","Aloqa kanallari tarmog‘i"]],
+["Quyidagilardan qaysi biri dasturiy ta’minotga kiradi?",["Operatsion tizim","Monitor","Router","Klaviatura"]],
+["Raqamli iqtisodiyotda “yangi xomashyo” deb nimaga aytiladi?",["Ma’lumotlarga","Neftga","Metallga","Qog‘ozga"]],
+["Tarmoq effekti nimani anglatadi?",["Foydalanuvchi ko‘paysa, xizmat qadri oshadi","Foydalanuvchi ko‘paysa, narx tushadi","Internet sekinlashadi","Serverlar soni kamayadi"]],
+["ERP tizimi nima uchun ishlatiladi?",["Korxona jarayonlarini yagona tizimda boshqarish","Video tahrirlash","Virusdan himoyalanish","Rasm chizish"]],
+["CRM tizimi nimani boshqaradi?",["Mijozlar bilan munosabatlarni","Elektr energiyasini","Yer uchastkalarini","Havo harakatini"]],
+["IT-xizmatlar eksporti iqtisodiyotga qanday foyda beradi?",["Valyuta tushumi va soliq bazasini oshiradi","Importni oshiradi","Ish o‘rinlarini kamaytiradi","Infratuzilmani keraksiz qiladi"]],
+["Qaysi davlat elektron hukumat tajribasi bilan mashhur?",["Estoniya","Misr","Peru","Nepal"]],
+["“Raqamli O‘zbekiston – 2030” strategiyasi qaysi yilda qabul qilingan?",["2020","2010","2015","2025"]],
+["Aniq dehqonchilikda qaysi vositalar ko‘p ishlatiladi?",["Sensor va dronlar","Kotmon va arava","Faqat qo‘l mehnati","Gramofon"]],
+["Bulutli texnologiyaning asosiy afzalligi nima?",["Hisoblash quvvatini ijaraga olish mumkin","Internet kerak emas","Dastur yozish shart emas","Elektr kerak emas"]],
+["Fishing nima?",["Soxta xabar yoki sayt orqali ma’lumot o‘g‘irlash","Kompyuterni tezlashtirish","Fayllarni arxivlash","Tarmoq kabeli turi"]],
+["Raqamli tengsizlik nima?",["Texnologiyaga kirish imkoniyati har xilligi","Kompyuter narxi farqi","Ekran o‘lchami farqi","Dastur turlari soni"]],
+["ROI ko‘rsatkichi nimani baholaydi?",["Investitsiya samaradorligini","Internet tezligini","Xodimlar sonini","Server hajmini"]],
+["Telemeditsina nima?",["Masofadan tibbiy xizmat ko‘rsatish","Dori ishlab chiqarish","Shifoxona qurish","Tibbiy sug‘urta turi"]],
+["IoT nimani bildiradi?",["Narsalar internetini","Ichki operatsion tizimni","Axborot o‘lchov tizimini","Internet operatorini"]],
+["Elektron raqamli imzo (ERI) nima uchun kerak?",["Hujjatlarni masofadan imzolash uchun","Musiqa yozish uchun","Rasm tahrirlash uchun","Internetni tezlashtirish uchun"]],
+["Dashboard nima?",["Asosiy ko‘rsatkichlar jamlangan ekran","Kompyuter virusi","Printer turi","Tarmoq kabeli"]],
+["AKTning boshqaruvdagi asosiy vazifasi qaysi?",["Qarorlarni qo‘llab-quvvatlash","Xodimlarni almashtirish","Faqat reklama berish","Hujjatlarni yo‘q qilish"]],
+["Bashoratli ta’mirlash nima?",["Sensor ma’lumotiga ko‘ra buzilishni oldindan aniqlash","Buzilgandan keyin tuzatish","Har kuni uskunani almashtirish","Ta’mirdan voz kechish"]],
+["Ikki bosqichli autentifikatsiya nimaga xizmat qiladi?",["Hisob xavfsizligini oshirishga","Internetni tezlashtirishga","Reklamani ko‘paytirishga","Xotirani kengaytirishga"]]
+];
+const COL=["#1f6fb2","#d9822b","#2a9d5f","#8e4fb3","#d64545"],L=["A","B","C","D"],TIME=45;
+const $=document.getElementById("app");
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let nT=4,nQ=10,names=[],teams,qs,qi,tmr,end,locked;
+function setup(){
+ $.innerHTML=`<h1>🧠 AKT Zakovat</h1><p class="mut">Axborot-kommunikatsiya texnologiyalarining iqtisodiyotdagi o‘rni va vazifalari bo‘yicha jamoaviy o‘yin. Har bir savolga ${TIME} soniya beriladi.</p>
+ <div class="card"><h2>Jamoalar soni</h2><div class="row">${[3,4,5].map(n=>`<button class="${n==nT?"sel":""}" onclick="nT=${n};keep();setup()">${n} ta jamoa</button>`).join("")}</div>
+ <div id="nm">${Array.from({length:nT},(_,i)=>`<input id="n${i}" maxlength="20" placeholder="${i+1}-jamoa nomi" value="${esc(names[i]||"")}">`).join("")}</div></div>
+ <div class="card"><h2>Savollar soni</h2><div class="row">${[10,15,20].map(n=>`<button class="${n==nQ?"sel":""}" onclick="nQ=${n};keep();setup()">${n} ta</button>`).join("")}</div>
+ <p class="mut">Har to‘g‘ri javob: 10 ball + tezlik bonusi (5 gacha). Savollar jamoalarga navbat bilan beriladi.</p></div>
+ <button class="pri" style="width:100%;font-size:20px" onclick="start()">O‘yinni boshlash</button>`}
+function keep(){names=Array.from({length:5},(_,i)=>{const e=document.getElementById("n"+i);return e?e.value:names[i]||""})}
+function start(){keep();teams=Array.from({length:nT},(_,i)=>({n:(names[i]||"").trim()||(i+1)+"-jamoa",s:0,c:0}));
+ qs=shuf(Q).slice(0,nQ).map(([q,o])=>({q,o:shuf(o.map((t,k)=>({t,r:k==0})))}));qi=0;show()}
+function board(cur){return `<div class="chips">${teams.map((t,i)=>`<span class="chip ${i==cur?"on":""}" style="${i==cur?"background:"+COL[i]:"border-color:"+COL[i]}">${esc(t.n)}: <b>${t.s}</b></span>`).join("")}</div>`}
+function show(){locked=false;const cur=qi%nT,q=qs[qi];
+ $.innerHTML=`${board(cur)}<div class="card"><div class="row" style="justify-content:space-between"><span class="mut">Savol ${qi+1} / ${qs.length}</span><b style="color:${COL[cur]}">Navbat: ${esc(teams[cur].n)}</b></div>
+ <div class="time" id="tm">${TIME}</div><div class="bar"><i id="br"></i></div>
+ <div class="q">${esc(q.q)}</div><div class="opts">${q.o.map((o,k)=>`<button class="opt" id="o${k}" onclick="pick(${k})"><b>${L[k]}</b>${esc(o.t)}</button>`).join("")}</div>
+ <div id="fb"></div></div>`;
+ end=Date.now()+TIME*1000;clearInterval(tmr);tmr=setInterval(tick,200);tick()}
+function tick(){const left=Math.max(0,(end-Date.now())/1000);const tm=document.getElementById("tm");if(!tm)return;
+ tm.textContent=Math.ceil(left);tm.className="time"+(left<=10?" low":"");document.getElementById("br").style.width=(left/TIME*100)+"%";
+ if(left<=0&&!locked)finish(-1,0)}
+function pick(k){if(locked)return;finish(k,Math.max(0,(end-Date.now())/1000))}
+function finish(k,left){locked=true;clearInterval(tmr);const cur=qi%nT,q=qs[qi];let msg;
+ q.o.forEach((o,j)=>{const b=document.getElementById("o"+j);b.disabled=true;if(o.r)b.classList.add("ok");else if(j==k)b.classList.add("bad")});
+ if(k>=0&&q.o[k].r){const p=10+Math.ceil(left/9);teams[cur].s+=p;teams[cur].c++;msg=`✅ To‘g‘ri! +${p} ball`}
+ else msg=k<0?"⏰ Vaqt tugadi! 0 ball":"❌ Noto‘g‘ri! 0 ball";
+ document.getElementById("fb").innerHTML=`<p style="font-size:20px;font-weight:700">${msg}</p><button class="pri" onclick="next()">${qi+1<qs.length?"Keyingi savol":"Natijalarni ko‘rish"}</button>`}
+function next(){qi++;qi<qs.length?show():fin()}
+function fin(){const r=teams.map((t,i)=>({...t,i})).sort((a,b)=>b.s-a.s),m=["🥇","🥈","🥉","4","5"];
+ $.innerHTML=`<h1>🏆 O‘yin yakunlandi!</h1><p class="mut">G‘olib: <b>${esc(r[0].n)}</b></p>
+ ${r.map((t,k)=>`<div class="rank" style="border-color:${COL[t.i]}"><span>${m[k]}</span><span>${esc(t.n)}</span><span class="mut" style="font-size:14px">${t.c}/${Math.ceil((qs.length-t.i)/nT)} to‘g‘ri</span><b>${t.s}</b></div>`).join("")}
+ <button class="pri" style="width:100%;margin-top:12px" onclick="setup()">Qayta o‘ynash</button>`}
+setup();
+</script></body></html>
